@@ -187,7 +187,7 @@ function render(){
       const we=isWeekend(YEAR,month,d);
       const key=`${YEAR}-${month}-${d}`;
       const hasPto=pto[key];
-      const isHalf=hasPto==='half'||(hasPto&&m===8&&new Date(YEAR,month-1,d).getDay()===5);
+      const isHalf=hasPto==='half'||(hasPto&&month===8&&new Date(YEAR,month-1,d).getDay()===5);
       let cls=ev?ev.cls:'';
       if(hol&&!ev)cls='holiday';
       if(we)cls+=' weekend';

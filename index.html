@@ -43,8 +43,8 @@ h1{text-align:center;font-size:2.5em;margin-bottom:10px;background:linear-gradie
 .liguria .tag{background:rgba(72,209,204,.6);color:#fff}
 .compleanno{background:rgba(255,215,0,.25);border:1px solid rgba(255,215,0,.5)}
 .compleanno .tag{background:rgba(255,215,0,.7);color:#000}
-.mare{background:rgba(0,150,255,.2);border:1px solid rgba(0,150,255,.4)}
-.mare .tag{background:rgba(0,150,255,.6);color:#fff}
+.mare{background:rgba(0,150,255,.1);border:1px dashed rgba(0,150,255,.25)}
+.mare .tag{background:rgba(0,150,255,.3);color:rgba(255,255,255,.7)}
 .madcool{background:rgba(255,0,100,.3);border:1px solid rgba(255,0,100,.5)}
 .madcool .tag{background:rgba(255,0,100,.7);color:#fff}
 .capri{background:rgba(255,165,0,.25);border:1px solid rgba(255,165,0,.4)}
@@ -83,7 +83,7 @@ h1{text-align:center;font-size:2.5em;margin-bottom:10px;background:linear-gradie
 <div class="legend">
 <div class="legend-item"><div class="legend-dot" style="background:rgba(72,209,204,.5)"></div>Liguria 🫶</div>
 <div class="legend-item"><div class="legend-dot" style="background:rgba(255,215,0,.5)"></div>Compleanno 🎂</div>
-<div class="legend-item"><div class="legend-dot" style="background:rgba(0,150,255,.4)"></div>Casa al mare 🌊</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(0,150,255,.2);border:1px dashed rgba(0,150,255,.3)"></div>Circeo (disponibile) 🏠</div>
 <div class="legend-item"><div class="legend-dot" style="background:rgba(255,0,100,.5)"></div>Mad Cool 🎵</div>
 <div class="legend-item"><div class="legend-dot" style="background:rgba(255,165,0,.5)"></div>Capri 🏝️</div>
 <div class="legend-item"><div class="legend-dot" style="background:rgba(168,85,247,.5)"></div>Ischia + Gazzelle 🎤</div>
@@ -109,17 +109,17 @@ const TOTAL_PTO = 25;
 const YEAR = 2026;
 
 const events = [
-  // Turni Sergio (casa al mare disponibile)
-  {start:[2026,3,27],end:[2026,4,3],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,4,10],end:[2026,4,17],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,4,24],end:[2026,5,1],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,5,8],end:[2026,5,15],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,5,22],end:[2026,5,29],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,6,5],end:[2026,6,12],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,6,19],end:[2026,6,26],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,7,3],end:[2026,7,17],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,7,31],end:[2026,8,14],cls:'mare',tag:'🏠 Mare (Sergio)'},
-  {start:[2026,8,28],end:[2026,9,4],cls:'mare',tag:'🏠 Mare (Sergio)'},
+  // Turni Circeo (casa disponibile)
+  {start:[2026,3,27],end:[2026,4,3],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,4,10],end:[2026,4,17],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,4,24],end:[2026,5,1],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,5,8],end:[2026,5,15],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,5,22],end:[2026,5,29],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,6,5],end:[2026,6,12],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,6,19],end:[2026,6,26],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,7,3],end:[2026,7,17],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,7,31],end:[2026,8,14],cls:'mare',tag:'Circeo 🏠'},
+  {start:[2026,8,28],end:[2026,9,4],cls:'mare',tag:'Circeo 🏠'},
   // I miei piani
   {start:[2026,6,12],end:[2026,6,14],cls:'liguria',tag:'Liguria 🫶'},
   {start:[2026,6,19],end:[2026,6,21],cls:'compleanno',tag:'Birthday 🎂'},

@@ -80,6 +80,11 @@ h1{text-align:center;font-size:2.5em;margin-bottom:10px;background:linear-gradie
 <div class="legend-item"><div class="legend-dot" style="outline:2px solid #fbbf24;width:12px;height:12px"></div>Ferie 🏖️</div>
 </div>
 
+<div style="text-align:center;margin-bottom:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+<button onclick="showPast=!showPast;render()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85em" id="togglePast">👁️ Mostra mesi passati</button>
+<button onclick="if(confirm('Reset tutte le ferie?')){pto={};save();updateCounter();render()}" style="background:rgba(255,50,50,.2);border:1px solid rgba(255,50,50,.4);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.85em">🗑️ Reset ferie</button>
+</div>
+
 <div id="calendar"></div>
 
 <div class="stats" id="stats"></div>
@@ -122,6 +127,7 @@ const monthNames=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Lugli
 const monthEmojis=['❄️','💝','🌱','🌸','🌺','☀️','🔥','🏖️','🍂','🎃','🍁','🎄'];
 
 let pto = JSON.parse(localStorage.getItem('summer26_pto')||'{}');
+let showPast = false;
 function save(){localStorage.setItem('summer26_pto',JSON.stringify(pto))}
 
 function getEvent(y,m,d){
@@ -169,7 +175,10 @@ function render(){
   const cal=document.getElementById('calendar');
   cal.innerHTML='';
   // Show all 12 months
+  const now=new Date();
+  const curMonth=now.getMonth()+1;
   for(let month=1;month<=12;month++){
+    if(!showPast && month<curMonth) continue;
     const div=document.createElement('div');
     div.className='month';
     div.innerHTML=`<div class="month-title">${monthEmojis[month-1]} ${monthNames[month-1]} ${YEAR}</div>`;

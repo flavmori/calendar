@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Estate 2026 🌊</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;padding:30px;color:#fff}
+h1{text-align:center;font-size:2.5em;margin-bottom:10px;background:linear-gradient(90deg,#f093fb,#f5576c,#fda085);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{text-align:center;opacity:.7;margin-bottom:20px;font-size:1.1em}
+.pto-bar{text-align:center;margin-bottom:30px;padding:16px;background:rgba(255,255,255,.08);border-radius:12px;border:1px solid rgba(255,255,255,.15)}
+.pto-bar .counter{font-size:1.8em;font-weight:700}
+.pto-bar .detail{opacity:.7;margin-top:4px;font-size:.9em}
+.progress-wrap{margin-top:10px;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;max-width:400px;margin-left:auto;margin-right:auto}
+.progress-fill{height:100%;background:linear-gradient(90deg,#34d399,#fbbf24,#f87171);border-radius:4px;transition:width .3s}
+.legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:30px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.85em}
+.legend-dot{width:14px;height:14px;border-radius:4px}
+.month{margin-bottom:40px;background:rgba(255,255,255,.05);border-radius:16px;padding:24px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1)}
+.month-title{font-size:1.5em;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.day-header{text-align:center;font-size:.75em;opacity:.5;padding:6px;text-transform:uppercase;font-weight:600}
+.day{position:relative;text-align:center;padding:10px 4px;border-radius:8px;font-size:.85em;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;user-select:none}
+.day:hover{transform:scale(1.08);box-shadow:0 0 12px rgba(255,255,255,.15)}
+.day.empty{opacity:0;cursor:default}
+.day.weekend{opacity:.5;cursor:default}
+.day.holiday{opacity:.8;cursor:default;background:rgba(255,100,100,.15);border:1px solid rgba(255,100,100,.3)}
+.day.holiday .tag{background:rgba(255,100,100,.6);color:#fff}
+.day .num{font-weight:600;font-size:1em}
+.day .dow{font-size:.65em;opacity:.5;margin-top:2px}
+.day .tag{font-size:.55em;margin-top:3px;padding:1px 4px;border-radius:4px;white-space:nowrap;font-weight:600}
+.day.pto{outline:2px solid #fbbf24;outline-offset:-2px}
+.day.pto::after{content:'🏖️';position:absolute;top:2px;right:4px;font-size:.6em}
+.day.half-pto{outline:2px dashed #fbbf24;outline-offset:-2px}
+.day.half-pto::after{content:'½';position:absolute;top:2px;right:4px;font-size:.6em;color:#fbbf24;font-weight:700}
+.liguria{background:rgba(72,209,204,.25);border:1px solid rgba(72,209,204,.4)}
+.liguria .tag{background:rgba(72,209,204,.6);color:#fff}
+.compleanno{background:rgba(255,215,0,.25);border:1px solid rgba(255,215,0,.5)}
+.compleanno .tag{background:rgba(255,215,0,.7);color:#000}
+.mare{background:rgba(0,150,255,.2);border:1px solid rgba(0,150,255,.4)}
+.mare .tag{background:rgba(0,150,255,.6);color:#fff}
+.madcool{background:rgba(255,0,100,.3);border:1px solid rgba(255,0,100,.5)}
+.madcool .tag{background:rgba(255,0,100,.7);color:#fff}
+.capri{background:rgba(255,165,0,.25);border:1px solid rgba(255,165,0,.4)}
+.capri .tag{background:rgba(255,165,0,.7);color:#fff}
+.ischia{background:rgba(168,85,247,.25);border:1px solid rgba(168,85,247,.5)}
+.ischia .tag{background:rgba(168,85,247,.7);color:#fff}
+.circeo{background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4)}
+.circeo .tag{background:rgba(34,197,94,.6);color:#fff}
+.wedding{background:rgba(255,182,193,.3);border:1px solid rgba(255,182,193,.6)}
+.wedding .tag{background:rgba(255,182,193,.8);color:#000}
+.primeday{background:rgba(0,200,255,.2);border:1px solid rgba(0,200,255,.5)}
+.primeday .tag{background:rgba(0,200,255,.7);color:#000}
+.tip{text-align:center;opacity:.5;font-size:.8em;margin-bottom:20px}
+.stats{text-align:center;margin-top:30px;opacity:.7;font-size:.9em}
+</style>
+</head>
+<body>
+<h1>☀️ Estate 2026</h1>
+<p class="subtitle">Giugno · Luglio · Agosto · Settembre · + Bank Holidays tutto l'anno</p>
+
+<div class="pto-bar">
+<div class="counter"><span id="used">0</span> / 25 giorni ferie usati</div>
+<div class="detail" id="detail">Rimanenti: 25 | Clicca sui giorni per segnare ferie</div>
+<div class="progress-wrap"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+</div>
+
+<p class="tip">💡 Clicca su un giorno feriale per segnare ferie. Venerdì Agosto = ½ giornata. Bank holidays = gratis (non cliccabili). Clicca di nuovo per togliere.</p>
+
+<div class="legend">
+<div class="legend-item"><div class="legend-dot" style="background:rgba(72,209,204,.5)"></div>Liguria 🫶</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(255,215,0,.5)"></div>Compleanno 🎂</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(0,150,255,.4)"></div>Casa al mare 🌊</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(255,0,100,.5)"></div>Mad Cool 🎵</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(255,165,0,.5)"></div>Capri 🏝️</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(168,85,247,.5)"></div>Ischia + Gazzelle 🎤</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(34,197,94,.4)"></div>Circeo 🏖️</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(255,182,193,.6)"></div>Matrimonio 👑💍</div>
+<div class="legend-item"><div class="legend-dot" style="background:rgba(255,100,100,.3);border:1px solid rgba(255,100,100,.5)"></div>Bank Holiday 🎉</div>
+<div class="legend-item"><div class="legend-dot" style="outline:2px solid #fbbf24;width:12px;height:12px"></div>Ferie 🏖️</div>
+</div>
+
+<div id="calendar"></div>
+
+<div class="stats" id="stats"></div>
+
+<script>
+const TOTAL_PTO = 25;
+const YEAR = 2026;
+
+const events = [
+  {start:[2026,6,12],end:[2026,6,14],cls:'liguria',tag:'Liguria 🫶'},
+  {start:[2026,6,19],end:[2026,6,21],cls:'compleanno',tag:'Birthday 🎂'},
+  {start:[2026,6,23],end:[2026,6,26],cls:'primeday',tag:'Work Event 💼'},
+  {start:[2026,7,3],end:[2026,7,17],cls:'mare',tag:'Mare 🌊'},
+  {start:[2026,7,9],end:[2026,7,9],cls:'madcool',tag:'Mad Cool 🎵'},
+  {start:[2026,7,17],end:[2026,7,19],cls:'capri',tag:'Capri 🏝️'},
+  {start:[2026,7,19],end:[2026,7,24],cls:'ischia',tag:'Ischia 🎤'},
+  {start:[2026,7,31],end:[2026,8,14],cls:'circeo',tag:'Circeo 🏖️'},
+  {start:[2026,9,5],end:[2026,9,5],cls:'wedding',tag:'👑 Matrimonio 💍'},
+];
+
+// Amazon Madrid Public Holidays 2026 - key: "M-D"
+const holidays = {
+  '1-1':'Capodanno 🎆',
+  '1-6':'Epifania 👑',
+  '4-2':'Giovedì Santo',
+  '4-3':'Venerdì Santo',
+  '5-1':'Festa Lavoro',
+  '5-2':'Día de Madrid',
+  '5-15':'San Isidro',
+  '7-25':'Santiago',
+  '8-15':'Ferragosto 🎉',
+  '10-12':'Fiesta Nacional',
+  '11-9':'Almudena',
+  '12-8':'Immacolata',
+  '12-25':'Natale 🎄',
+};
+
+const dow=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+const monthNames=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+const monthEmojis=['❄️','💝','🌱','🌸','🌺','☀️','🔥','🏖️','🍂','🎃','🍁','🎄'];
+
+let pto = JSON.parse(localStorage.getItem('summer26_pto')||'{}');
+function save(){localStorage.setItem('summer26_pto',JSON.stringify(pto))}
+
+function getEvent(y,m,d){
+  let best=null,bestDur=Infinity;
+  for(const e of events){
+    const s=new Date(e.start[0],e.start[1]-1,e.start[2]);
+    const en=new Date(e.end[0],e.end[1]-1,e.end[2]);
+    const cur=new Date(y,m-1,d);
+    if(cur>=s&&cur<=en){const dur=en-s;if(dur<bestDur){best=e;bestDur=dur}}
+  }
+  return best;
+}
+
+function isHoliday(m,d){return holidays[`${m}-${d}`]||null}
+
+function getPtoCost(y,m,d){
+  const dt=new Date(y,m-1,d);
+  if(m===8 && dt.getDay()===5) return 0.5;
+  return 1;
+}
+
+function isWeekend(y,m,d){
+  const dt=new Date(y,m-1,d);
+  return dt.getDay()===0||dt.getDay()===6;
+}
+
+function updateCounter(){
+  let used=0;
+  for(const k in pto){
+    if(!pto[k])continue;
+    const[y,m,d]=k.split('-').map(Number);
+    used+=getPtoCost(y,m,d);
+  }
+  document.getElementById('used').textContent=used%1===0?used:used.toFixed(1);
+  const remaining=TOTAL_PTO-used;
+  document.getElementById('detail').textContent=`Rimanenti: ${remaining%1===0?remaining:remaining.toFixed(1)} giorni | Ven Agosto = ½ | Bank Holidays = gratis`;
+  document.getElementById('progress').style.width=`${(used/TOTAL_PTO)*100}%`;
+}
+
+function render(){
+  const cal=document.getElementById('calendar');
+  cal.innerHTML='';
+  // Show all 12 months
+  for(let month=1;month<=12;month++){
+    const div=document.createElement('div');
+    div.className='month';
+    div.innerHTML=`<div class="month-title">${monthEmojis[month-1]} ${monthNames[month-1]} ${YEAR}</div>`;
+    const grid=document.createElement('div');
+    grid.className='grid';
+    dow.forEach(d=>grid.innerHTML+=`<div class="day-header">${d}</div>`);
+    const first=new Date(YEAR,month-1,1);
+    let startDay=(first.getDay()+6)%7;
+    for(let i=0;i<startDay;i++)grid.innerHTML+=`<div class="day empty"></div>`;
+    const daysInMonth=new Date(YEAR,month,0).getDate();
+    for(let d=1;d<=daysInMonth;d++){
+      const ev=getEvent(YEAR,month,d);
+      const hol=isHoliday(month,d);
+      const dayIdx=(startDay+d-1)%7;
+      const we=isWeekend(YEAR,month,d);
+      const key=`${YEAR}-${month}-${d}`;
+      const hasPto=pto[key];
+      const cost=getPtoCost(YEAR,month,d);
+      let cls=ev?ev.cls:'';
+      if(hol&&!ev)cls='holiday';
+      if(we)cls+=' weekend';
+      if(hasPto)cls+=cost===0.5?' half-pto':' pto';
+      const el=document.createElement('div');
+      el.className=`day ${cls}`;
+      let tagHtml='';
+      if(ev)tagHtml=`<span class="tag">${ev.tag}</span>`;
+      else if(hol)tagHtml=`<span class="tag">${hol}</span>`;
+      el.innerHTML=`<span class="num">${d}</span><span class="dow">${dow[dayIdx]}</span>${tagHtml}`;
+      if(!we&&!hol){
+        el.onclick=()=>{
+          if(pto[key]){delete pto[key]}else{pto[key]=true}
+          save();updateCounter();render();
+        };
+      }
+      grid.appendChild(el);
+    }
+    div.appendChild(grid);
+    cal.appendChild(div);
+  }
+  document.getElementById('stats').innerHTML='🎵 Mad Cool: Gio 9 Luglio (Melisa 8-12) | 🎂 Compleanno: Sab 20 Giugno | 👑 Matrimonio Valeria & Alex: Sab 5 Settembre | 🎉 Bank Holidays: 13 giorni';
+}
+
+updateCounter();
+render();
+</script>
+</body>
+</html>

@@ -254,7 +254,7 @@ function setToken(t){localStorage.setItem('gh_token',t)}
 
 async function cloudSave(){
   const t=getToken();if(!t)return;
-  try{await fetch(`https://api.github.com/gists/${GIST_ID}`,{method:'PATCH',headers:{'Authorization':`token ${t}`,'Content-Type':'application/json'},body:JSON.stringify({files:{'pto.json':{content:JSON.stringify(pto)}}})});}catch(e){}
+  try{await fetch(`https://api.github.com/gists/${GIST_ID}`,{method:'PATCH',headers:{'Authorization':`token ${t}`,'Content-Type':'application/json'},body:JSON.stringify({files:{'pto.json':{content:JSON.stringify(pto)},'todos.json':{content:JSON.stringify(todos)},'events.json':{content:JSON.stringify(customEvents)}}})});}catch(e){}
 }
 
 async function cloudLoad(){
@@ -377,10 +377,13 @@ function render(){
 let customEvents = JSON.parse(localStorage.getItem('fm_custom_events')||'[]');
 
 function saveCustomEvents(){
-  localStorage.setItem('fm_custom_events',JSON.stringify(customEvents));
-  const t=getToken();if(!t)return;
-  fetch(`https://api.github.com/gists/${GIST_ID}`,{method:'PATCH',headers:{'Authorization':`token ${t}`,'Content-Type':'application/json'},body:JSON.stringify({files:{'pto.json':{content:JSON.stringify(pto)},'todos.json':{content:JSON.stringify(todos)},'events.json':{content:JSON.stringify(customEvents)}}})}).catch(()=>{});
+  localStorage.setItem('fm_custom_events',JSON.stringify(customEvents));cloudSave();
 }
+
+
+
+
+
 
 function addCustomEvent(){
   const name=document.getElementById('evName').value.trim();
@@ -411,9 +414,7 @@ let todos = JSON.parse(localStorage.getItem('fm_todos')||'[]');
 
 function saveTodos(){
   localStorage.setItem('fm_todos',JSON.stringify(todos));
-  // Cloud sync todos too
-  const t=getToken();if(!t)return;
-  fetch(`https://api.github.com/gists/${GIST_ID}`,{method:'PATCH',headers:{'Authorization':`token ${t}`,'Content-Type':'application/json'},body:JSON.stringify({files:{'pto.json':{content:JSON.stringify(pto)},'todos.json':{content:JSON.stringify(todos)}}})}).catch(()=>{});
+  cloudSave();
 }
 
 function renderTodos(){
